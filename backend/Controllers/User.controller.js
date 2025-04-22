@@ -38,7 +38,7 @@ const userLogin= async (req,res)=>{
         return res.status(400).send("invalid password")
     }
     const role=user.role
-    const token=jwt.sign({userId:user._id},process.env.SECRET_KEY,{expiresIn:'10s'})
+    const token=jwt.sign({userId:user._id},process.env.SECRET_KEY,{expiresIn:'1h'})
     res.send({ token, role })
 }
 
