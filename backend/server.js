@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGODB_URI)
 })    
 
 app.use(cors({
-    origin:['https://client-mu-indol.vercel.app/'],
+    origin:['https://client-mu-indol.vercel.app'],
     credentials:true
 }));
 app.use(express.json());
