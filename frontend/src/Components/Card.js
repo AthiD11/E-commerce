@@ -28,6 +28,10 @@ const Cards = (props) => {
           position: 'relative',
           height: 300,
           overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#f5f5f5',
           '&:hover .hoverImg': {
             opacity: 1,
           },
@@ -42,10 +46,12 @@ const Cards = (props) => {
           className="mainImg"
           style={{
             position: 'absolute',
-            height: '100%',
+            top: 0,
+            left: 0,
             width: '100%',
+            height: '100%',
             objectFit: 'cover',
-            transition: 'opacity 0.3s ease',
+            transition: 'opacity 0.4s ease-in-out',
             opacity: 1,
           }}
         />
@@ -55,10 +61,12 @@ const Cards = (props) => {
           className="hoverImg"
           style={{
             position: 'absolute',
-            height: '100%',
+            top: 0,
+            left: 0,
             width: '100%',
+            height: '100%',
             objectFit: 'cover',
-            transition: 'opacity 0.3s ease',
+            transition: 'opacity 0.4s ease-in-out',
             opacity: 0,
           }}
         />
@@ -70,10 +78,11 @@ const Cards = (props) => {
           Brand: {props.brand} | Category: {props.cat}
         </Typography>
         <Typography level="body-md">
-          <span style={{ textDecoration: 'line-through', marginRight: '8px',color:'red' }}>
-            <i className="fa-solid fa-dollar-sign "></i>{props.price}
+          <span style={{ textDecoration: 'line-through', marginRight: '8px', color: 'red' }}>
+            <i className="fa-solid fa-dollar-sign"></i>{props.price}
           </span>
-          Buy at <i className="fa-solid fa-dollar-sign text-success"></i> <u className='text-success'>{props.dis}</u>
+          Buy at <i className="fa-solid fa-dollar-sign text-success"></i>{' '}
+          <u className="text-success">{props.dis}</u>
         </Typography>
       </CardContent>
 
@@ -81,8 +90,8 @@ const Cards = (props) => {
         <IconButton variant="outlined" color="neutral">
           <FavoriteBorder />
         </IconButton>
-        <Button variant="outlined" color="success" text="white">
-          Cart
+        <Button variant="outlined" color="success">
+          Buy
         </Button>
         <Button variant="solid" color="success" component={Link} to={`/movies/${props.id}`}>
           Details

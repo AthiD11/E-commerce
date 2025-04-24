@@ -28,7 +28,7 @@ const Registerpage = () => {
     }
   
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/register', {
+      const response = await axios.post('https://server-amber-iota-12.vercel.app/api/auth/register', {
         username,
         email,
         password,

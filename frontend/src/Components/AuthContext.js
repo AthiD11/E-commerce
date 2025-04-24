@@ -16,12 +16,32 @@ export const AuthProvider=({children})=>{
         setcart([...cart,item])
     }
 
-    const removefromcart=(itemtoremove)=>{
-        setcart(cart.filter((item)=>item._id!==itemtoremove._id))
+    const removeCart=(id)=>{
+        setcart(prevCart=>prevCart.filter(item=>item._id!==id));
     }
 
+    const increaseQuantity = (item) => {
+        const updatedCart = cart.map(cartItem =>
+            cartItem._id === item._id
+                ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                : cartItem
+        );
+        setcart(updatedCart);
+
+    };
+    
+    
+    const decreaseQuantity = (item) => {
+        const updatedCart = cart.map(cartItem =>
+            cartItem._id === item._id && cartItem.quantity > 1
+                ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                : cartItem
+        );
+        setcart(updatedCart);
+    };
+
 return(
-    <AuthContext.Provider value={{token,setToken,cart,addtocart,removefromcart}}>
+    <AuthContext.Provider value={{token,setToken,cart,addtocart,removeCart,increaseQuantity,decreaseQuantity}}>
         {children}
     </AuthContext.Provider>
 )

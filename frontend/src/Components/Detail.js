@@ -5,16 +5,23 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import React, { useContext } from "react";
+
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
-const detail = ({detail}) => {
-  const images = detail?.images || [];
-  // const { addtocart } = useContext(AuthContext);
-// console.log(detail);
-  if (!detail) return <p>Loading...</p>;
+const Detail = ({ detail }) => {
+  const { addtocart, removeCart } = useContext(AuthContext);
+  const [inCart, setInCart] = useState(false);
 
+  const handleCartToggle = () => {
+    if (inCart) {
+      removeCart(detail._id);
+    } else {
+      addtocart(detail);
+    }
+    setInCart(!inCart); // Toggle cart state
+  };
   return (
     <div className="container py-5">
       <div className="row g-4 align-items-stretch">
@@ -25,7 +32,7 @@ const detail = ({detail}) => {
             data-bs-ride="carousel"
           >
             <div className="carousel-inner">
-              {images.map((img, index) => (
+              {(detail?.images || []).map((img, index) => (
                 <div
                   className={`carousel-item ${index === 0 ? "active" : ""}`}
                   key={index}
@@ -45,7 +52,7 @@ const detail = ({detail}) => {
             </div>
 
             {/* Carousel controls */}
-            {images.length > 1 && (
+            {detail?.images?.length > 1 && (
               <>
                 <button
                   className="carousel-control-prev"
@@ -91,17 +98,23 @@ const detail = ({detail}) => {
                 variant="h4"
                 gutterBottom
                 sx={{
-                  fontSize: { xs: "1.3rem", md: "1.6rem" },
+                  fontSize: { xs: "1.3rem", md: "1.6rem" }, // Adjusting font size for different breakpoints
                 }}
               >
                 {detail?.name || "Loading..."}
               </Typography>
-              <Typography variant="h6">Brand: {detail?.brand || "N/A"}</Typography>
-              <Typography variant="h6">Category: {detail?.category || "N/A"}</Typography>
+              <Typography variant="h6">
+                Brand: {detail?.brand || "N/A"}
+              </Typography>
+              <Typography variant="h6">
+                Category: {detail?.category || "N/A"}
+              </Typography>
               <Typography variant="h6" sx={{ mt: 1 }}>
                 Price:{" "}
-                <span style={{ textDecoration: "line-through", marginRight: "8px" }}>
-                  ₹{detail?.price}
+                <span
+                  style={{ textDecoration: "line-through", marginRight: "8px" }}
+                >
+                  ₹{detail?.price}/{" "}
                 </span>
                 Buy at <u>₹{detail?.discountprice}</u>
               </Typography>
@@ -111,7 +124,7 @@ const detail = ({detail}) => {
                   variant="h5"
                   gutterBottom
                   sx={{
-                    fontSize: { xs: "1.2rem", md: "1.6rem" },
+                    fontSize: { xs: "1.2rem", md: "1.6rem" }, // Adjusting font size for different breakpoints
                   }}
                 >
                   About the Product:
@@ -121,7 +134,7 @@ const detail = ({detail}) => {
                   variant="h6"
                   color="text.secondary"
                   sx={{
-                    fontSize: { xs: "0.9rem", md: "1.3rem" },
+                    fontSize: { xs: "0.9rem", md: "1.3rem" }, // Adjusting font size for different breakpoints
                   }}
                 >
                   {detail?.description || "No description available."}
@@ -130,16 +143,17 @@ const detail = ({detail}) => {
             </CardContent>
 
             <Box sx={{ display: "flex", gap: 2, px: 2, pb: 2 }}>
-              <Button variant="contained" color="error">
+              <Button variant="contained" color="error" sx={{}}>
                 Buy Now
               </Button>
+              {/* <Button variant="contained" size="large" color="primary" onClick={()=>addtocart(detail)}  >Add to Cart</Button> */}
               <Button
                 variant="contained"
                 size="large"
-                color="primary"
-              
+                color={inCart ? "error" : "primary"}
+                onClick={handleCartToggle}
               >
-                Add to Cart
+                {inCart ? "Remove from Cart" : "Add to Cart"}
               </Button>
             </Box>
             <Button
@@ -155,31 +169,9 @@ const detail = ({detail}) => {
         </div>
       </div>
 
-      {/* Optional style block if needed for hover effects */}
-      <style>{`
-        .mainImg,
-        .hoverImg {
-          transition: opacity 0.3s ease;
-        }
-
-        .position-relative:hover .mainImg {
-          opacity: 0 !important;
-        }
-
-        .position-relative:hover .hoverImg {
-          opacity: 1 !important;
-        }
-
-        .object-fit-cover {
-          object-fit: cover;
-        }
-
-        .transition-opacity {
-          transition: opacity 0.3s ease;
-        }
-      `}</style>
+  
     </div>
   );
 };
 
-export default detail;
+export default Detail;

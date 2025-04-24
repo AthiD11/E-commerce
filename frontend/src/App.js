@@ -6,7 +6,9 @@ import Homepage from "./Pages/Homepage";
 import Registerpage from "./Pages/Registerpage";
 import Loginpage from "./Pages/Loginpage";
 import Adminhomepage from "./Pages/Adminhomepage";
-import Detail from "./Components/details";
+import { Detailspage } from "./Pages/Detailspage";
+import Viewcartpage from "./Pages/Viewcartpage";
+import Createproduct from "./Pages/Createproduct";
 
 function App() {
   return (
@@ -17,8 +19,10 @@ function App() {
             <Route path="/" element={<AuthGuard><Homepage /></AuthGuard>} />
             <Route path="/login" element={<Loginpage />} />
             <Route path="/Register" element={<Registerpage/>} />
-            <Route path="/movies/:id" element={<Detail/>} />
+            <Route path="/movies/:id" element={<Detailspage/>} />
             <Route path="/admin" element={<AuthGuard><Adminhomepage/></AuthGuard>}/>
+            <Route path="/cart" element={<Viewcartpage/>}/>
+            <Route path="/addproduct" element={<Createproduct/>}/>
           </Routes>
         </BrowserRouter>
       </AuthProvider>

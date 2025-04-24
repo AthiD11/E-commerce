@@ -26,7 +26,7 @@ const Loginpage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/login', {
+      const response = await axios.post('https://server-amber-iota-12.vercel.app/api/auth/login', {
         username,
         password,
       });
